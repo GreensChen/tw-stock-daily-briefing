@@ -2,9 +2,20 @@
 
 WATCHLIST = [
     {"code": "0050", "name": "元大台灣50", "type": "etf"},
-    {"code": "0056", "name": "元大高股息", "type": "etf"},
+    {"code": "006208", "name": "富邦台50", "type": "etf"},
+    {"code": "00895", "name": "富邦未來車", "type": "etf"},
     {"code": "2330", "name": "台積電", "type": "stock"},
+    {"code": "2454", "name": "聯發科", "type": "stock"},
 ]
+
+# 美股持有部位
+US_HELD = [
+    {"ticker": "QQQ", "name": "Invesco QQQ (NASDAQ 100)"},
+    {"ticker": "SPY", "name": "SPDR S&P 500"},
+    {"ticker": "NVDA", "name": "輝達 NVIDIA"},
+]
+
+# 美股外部機會 = 動態，由 Gemini 從當天新聞 + 市場動向挑出，不寫死
 
 INTL_TICKERS = {
     "^DJI": "道瓊工業指數",

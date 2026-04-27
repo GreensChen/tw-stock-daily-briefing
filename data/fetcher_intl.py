@@ -6,7 +6,7 @@ from typing import Any
 
 import yfinance as yf
 
-from config import INTL_TICKERS
+from config import INTL_TICKERS, US_HELD
 
 logger = logging.getLogger(__name__)
 
@@ -43,6 +43,16 @@ def fetch_all_intl() -> list[dict[str, Any]]:
     for ticker, name in INTL_TICKERS.items():
         row = fetch_one(ticker)
         row["name"] = name
+        out.append(row)
+    return out
+
+
+def fetch_us_held() -> list[dict[str, Any]]:
+    """抓美股持有部位（QQQ/SPY/NVDA 等）"""
+    out = []
+    for item in US_HELD:
+        row = fetch_one(item["ticker"])
+        row["name"] = item["name"]
         out.append(row)
     return out
 

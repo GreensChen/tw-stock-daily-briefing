@@ -12,7 +12,7 @@ import pytz
 from dotenv import load_dotenv
 
 from config import WATCHLIST
-from data.fetcher_intl import fetch_all_intl
+from data.fetcher_intl import fetch_all_intl, fetch_us_held
 from data.fetcher_news import fetch_all_news
 from data.fetcher_twse import fetch_all_twse, is_market_open_today
 from notify.line_bot import push_text
@@ -65,14 +65,15 @@ def run() -> int:
         twse = fetch_all_twse(WATCHLIST)
 
         current_step = "國際數據"
-        log.info("Step 2/4: 抓國際數據")
+        log.info("Step 2/4: 抓國際數據 + 美股持股")
         intl = fetch_all_intl()
+        us_held = fetch_us_held()
 
         current_step = "新聞 RSS"
         log.info("Step 3/4: 抓新聞 RSS")
         news = fetch_all_news()
 
-        data = {"twse": twse, "intl": intl, "news": news}
+        data = {"twse": twse, "intl": intl, "us_held": us_held, "news": news}
 
         # 把原始資料存檔（出問題時方便回頭看）
         date_str = datetime.now(tz).strftime("%Y%m%d")
