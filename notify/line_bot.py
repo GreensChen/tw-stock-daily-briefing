@@ -7,6 +7,7 @@ import os
 import requests
 
 from config import LINE_MAX_CHARS
+from utils import retry
 
 logger = logging.getLogger(__name__)
 
@@ -35,6 +36,7 @@ def _split_message(text: str, max_chars: int = LINE_MAX_CHARS) -> list[str]:
     return chunks
 
 
+@retry(times=3, delay=3.0)
 def push_text(text: str, user_id: str | None = None, token: str | None = None) -> None:
     """推送（自動拆訊息）。LINE push 一次最多 5 則 message。"""
     token = token or os.environ.get("LINE_CHANNEL_ACCESS_TOKEN")

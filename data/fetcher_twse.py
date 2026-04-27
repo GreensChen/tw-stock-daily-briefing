@@ -159,6 +159,17 @@ def fetch_stock_institutional(stock_code: str, date: str | None = None) -> dict[
     return {"code": stock_code, "error": "not found"}
 
 
+def is_market_open_today() -> bool:
+    """檢查台股今日是否開市（用 MI_INDEX 判斷）。
+    20:30 跑時，若今日有資料代表有開市；無資料代表休市/假日。"""
+    today = _today_roc_date()
+    try:
+        fetch_market_index(today)
+        return True
+    except Exception:
+        return False
+
+
 def _try_with_fallback(fn, *args, **kwargs):
     """對 TWSE API 自動 fallback 到前面工作日（最多 5 個）"""
     last_err = None

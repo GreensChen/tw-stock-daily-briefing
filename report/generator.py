@@ -11,6 +11,7 @@ import google.generativeai as genai
 import pytz
 
 from config import GEMINI_MODEL
+from utils import retry
 
 logger = logging.getLogger(__name__)
 
@@ -155,6 +156,7 @@ def build_prompt(data: dict[str, Any]) -> str:
     )
 
 
+@retry(times=3, delay=5.0)
 def generate_report(data: dict[str, Any]) -> str:
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
