@@ -17,6 +17,23 @@ US_HELD = [
 
 # 美股外部機會 = 動態，由 Gemini 從當天新聞 + 市場動向挑出，不寫死
 
+# === 早報專用 ===
+
+# 台股 ADR：用來預判台股開盤方向
+# ratio: 1 ADR 對應幾股 TW 普通股
+ADR_TICKERS = [
+    {"adr": "TSM",  "name": "台積電 ADR", "tw_code": "2330.TW", "tw_name": "台積電",   "ratio": 5},
+    {"adr": "UMC",  "name": "聯電 ADR",   "tw_code": "2303.TW", "tw_name": "聯電",     "ratio": 5},
+    {"adr": "ASX",  "name": "日月光 ADR", "tw_code": "3711.TW", "tw_name": "日月光投控", "ratio": 2},
+]
+
+# 美股期貨（早報時可參考的盤前/盤後延伸訊號）
+PREMARKET_TICKERS = {
+    "ES=F": "S&P 500 期貨",
+    "NQ=F": "NASDAQ 期貨",
+    "YM=F": "道瓊期貨",
+}
+
 INTL_TICKERS = {
     "^DJI": "道瓊工業指數",
     "^GSPC": "S&P 500",
