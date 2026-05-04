@@ -161,13 +161,20 @@ def fetch_stock_institutional(stock_code: str, date: str | None = None) -> dict[
 
 def is_market_open_today() -> bool:
     """檢查台股今日是否開市（用 MI_INDEX 判斷）。
-    20:30 跑時，若今日有資料代表有開市；無資料代表休市/假日。"""
+    20:30 跑時，若今日有資料代表有開市；無資料代表休市/假日。
+    加入 3 次重試，避免 TWSE API 短暫無回應被誤判為休市。"""
+    import time
     today = _today_roc_date()
-    try:
-        fetch_market_index(today)
-        return True
-    except Exception:
-        return False
+    for attempt in range(3):
+        try:
+            fetch_market_index(today)
+            return True
+        except Exception as e:
+            logger.warning("is_market_open_today 第 %d 次嘗試失敗: %s", attempt + 1, e)
+            if attempt < 2:
+                time.sleep(10)
+    logger.warning("is_market_open_today 3 次均失敗，判定為休市")
+    return False
 
 
 def _try_with_fallback(fn, *args, **kwargs):
