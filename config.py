@@ -13,6 +13,7 @@ US_HELD = [
     {"ticker": "QQQ", "name": "Invesco QQQ (NASDAQ 100)"},
     {"ticker": "SPY", "name": "SPDR S&P 500"},
     {"ticker": "NVDA", "name": "輝達 NVIDIA"},
+    {"ticker": "TSLA", "name": "特斯拉 Tesla"},
 ]
 
 # 美股外部機會 = 動態，由 Gemini 從當天新聞 + 市場動向挑出，不寫死
